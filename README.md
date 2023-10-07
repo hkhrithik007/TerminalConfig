@@ -30,3 +30,5 @@ Java is preconfigured with language server and autocomplete
 
 6.Ranger 
 its a command like file manager 
+<img width="1440" alt="Screenshot 2023-10-07 at 8 36 49 PM" src="https://github.com/hkhrithik007/My_Terminal-/assets/122602243/abcc74f5-96c7-4a99-bd9e-a34328f08710">
+
