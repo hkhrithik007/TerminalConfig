@@ -1,7 +1,7 @@
 local M = {}
 
 M.ui = {
-  theme = "tokyodark",
+  theme = "bearded-arc",
   cmp = {
     icons = true,
     style = "atom_colored",

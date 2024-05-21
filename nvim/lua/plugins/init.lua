@@ -4,7 +4,6 @@ return {
   {
     "stevearc/conform.nvim",
     lazy = true,
-
     enabled = false,
     event = { "BufWritePre", "BufnewFile" }, -- uncomment for format on save
     config = function()
@@ -77,6 +76,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = "VeryLazy",
     requries = { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
     opts = {
       ensure_installed = {
@@ -126,7 +126,7 @@ return {
     { "williamboman/mason.nvim",           lazy = true },
     { "williamboman/mason-lspconfig.nvim", lazy = true },
   },
-  { "williamboman/nvim-lsp-installer", event = "VeryLazy", lazy = true },
+  -- { "williamboman/nvim-lsp-installer", event = "VeryLazy", lazy = true },
   -- {
   --   "WhoIsSethDaniel/mason-tool-installer",
   --   lazy = true,
@@ -144,11 +144,12 @@ return {
     {
       "folke/noice.nvim",
       enabled = true,
+      lazy = true,
       dependencies = {
         "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify",
       },
-      event = "BufWinEnter",
+      event = { "BufRead", "BufnewFile", "BufReadPre" },
       opts = {
         messages = {
           enabled = false,
@@ -226,9 +227,17 @@ return {
     },
   },
   {
+    "folke/tokyonight.nvim",
+    lazy = true,
+    config = function()
+      require("tokyonight").setup()
+    end,
+  },
+  {
     {
       "stevearc/dressing.nvim",
       lazy = true,
+      event = { "BufRead", "BufnewFile" },
       init = function()
         ---@diagnostic disable-next-line: duplicate-set-field
         vim.ui.select = function(...)
@@ -246,6 +255,7 @@ return {
 
   {
     "max397574/better-escape.nvim",
+    lazy = true,
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
@@ -269,18 +279,19 @@ return {
     end,
     dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
-  {
-    "MaximilianLloyd/ascii.nvim",
-    event = "VeryLazy",
-    enabled = false,
-    dependencies = { "MunifTanjim/nui.nvim" },
-    config = function()
-      require("ascii").setup()
-    end,
-  },
+  -- {
+  --   "MaximilianLloyd/ascii.nvim",
+  --   event = "VeryLazy",
+  --   enabled = false,
+  --   dependencies = { "MunifTanjim/nui.nvim" },
+  --   config = function()
+  --     require("ascii").setup()
+  --   end,
+  -- },
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    lazy = "VeryLazy",
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
@@ -318,7 +329,7 @@ return {
   {
     "echasnovski/mini.indentscope",
     event = { "BufReadPre", "BufNewFile" },
-    -- lazy = false,
+    lazy = true,
     opts = {
       -- symbol = "▏",
       symbol = "│",
@@ -390,8 +401,8 @@ return {
     {
       "David-Kunz/gen.nvim",
       enabled = true,
-      event = "BufRead",
-      lazy = false,
+      event = { "BufRead", "BufNewFile" },
+      lazy = "VeryLazy",
       config = function()
         vim.keymap.set(
           "n",
@@ -399,6 +410,15 @@ return {
           ":lua require('gen').select_model()<cr>",
           { noremap = true, silent = true }
         )
+      end,
+    },
+    {
+      "codota/tabnine-nvim",
+      lazy = "VeryLazy",
+      build = "./dl_binaries.sh",
+      enabled = false,
+      config = function()
+        require("configs.tabnine")
       end,
     },
     -- {
@@ -474,8 +494,9 @@ return {
   --theme
   {
     "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
+    lazy = true,
+    enabled = false,
+    -- priority = 1000,
     config = function()
       require("configs.cyberdream")
     end,
@@ -491,12 +512,30 @@ return {
   },
   --addons
   {
-    "ggandor/leap.nvim",
-    lazy = false,
-    event = "BufRead",
-    init = function()
-      require("leap").add_default_mappings()
-    end,
-    dependencies = { "tpope/vim-repeat" },
+    {
+      "ggandor/leap.nvim",
+      enabled = false,
+      lazy = true,
+      event = { "BufRead", "BufNewFile" },
+      init = function()
+        require("leap").add_default_mappings()
+      end,
+      dependencies = { "tpope/vim-repeat" },
+    },
+    {
+      "folke/flash.nvim",
+      lazy = true,
+      event = "BufRead",
+      opts = {},
+      -- stylua: ignore
+      keys = {
+        { "C-s",   mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+        { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+        { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+        { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+        { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+      },
+    },
+    -- Add other plugins here...
   },
 }
