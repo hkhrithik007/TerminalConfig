@@ -79,8 +79,13 @@ return {
 			ensure_installed = {
 				"lua-language-server",
 				"stylua",
+				"luacheck",
 				"kotlin-language-server",
 				"jdtls",
+				"java-debug-adapter",
+				"ktfmt",
+				"google-java-format",
+				"trivy",
 				-- "html-lsp",
 				-- "css-lsp",
 				-- "prettier",
@@ -89,7 +94,7 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
-		lazy = "VeryLazy",
+		lazy = true,
 		requries = { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
 		opts = {
 			ensure_installed = {
@@ -123,7 +128,6 @@ return {
 		},
 	},
 	{
-		{ "williamboman/mason.nvim", lazy = true },
 		{ "williamboman/mason-lspconfig.nvim", lazy = "VeryLazy" },
 	},
 	--This is for UI
@@ -411,7 +415,7 @@ return {
 		{
 			"seandewar/killersheep.nvim",
 			lazy = "VeryLazy",
-			event = "BufRead",
+			-- event = "BufRead",
 			config = function()
 				require("configs.killersheep")
 			end,

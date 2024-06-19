@@ -136,6 +136,4 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 
 jdtls.start_or_attach(config)
 
-vim.cmd(
-	[[command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)]]
-)
+vim.cmd([[command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)]])
